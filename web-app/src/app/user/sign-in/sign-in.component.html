@@ -1,25 +1,24 @@
-<mat-card style="width: 90%;">
+<mat-card style="background: ivory;width: 25%;">
     <mat-card-title>Sign In</mat-card-title>
     <mat-card-content>
         <div class="row">
             <form [formGroup]="form" (ngSubmit)="signInUser()">
-                <mat-form-field appearance="fill">
-                    <mat-label>Email</mat-label>
-                    <input matInput matInput type="text" formControlName="email" placeholder="Enter a username"
-                        required>
-                    <mat-error *ngIf="form.hasError('required', 'email')">
-                        Please enter your email
-                    </mat-error>
-                </mat-form-field>
-                <br>
-                <mat-form-field appearance="fill">
-                    <mat-label>Password</mat-label>
-                    <input matInput type="password" formControlName="password" placeholder="Enter a password" required>
-                    <mat-error *ngIf="form.hasError('required', 'password')">
-                        Please enter your new password
-                    </mat-error>
-                </mat-form-field>
-                <br>
+                <p>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="email" placeholder="Email" required>
+                        <mat-error *ngIf="form.hasError('required', 'email')">
+                            Please enter your email
+                        </mat-error>
+                    </mat-form-field>
+                </p>
+                <p>
+                    <mat-form-field>
+                        <input matInput type="password" formControlName="password" placeholder="Password" required>
+                        <mat-error *ngIf="form.hasError('required', 'password')">
+                            Please enter your new password
+                        </mat-error>
+                    </mat-form-field>
+                </p>
                 <button mat-raised-button color="primary" type="submit">Sign In</button>
             </form>
         </div>

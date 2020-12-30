@@ -1,37 +1,51 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Sign Up</h1>
-        </div>
-        <div class="col-12">
-            <form [formGroup]="form" (ngSubmit)="signUpUser()">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" formControlName="fName" 
-                        placeholder="Enter First Name" required>
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" formControlName="lName" 
-                        placeholder="Enter Last Name" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control" formControlName="email" 
-                        placeholder="Enter a username" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" formControlName="password"
-                        placeholder="Enter a password" required>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" class="form-control" formControlName="confirmPass"
-                        placeholder="Re Enter the password" required>
-                </div>
-                <button type="submit" class="btn btn-success">Sign Up</button>
-            </form>
-        </div>
-    </div>
-</div>
+<mat-card style="background: ivory;width: 25%;">
+    <mat-card-title>
+        Sign Up
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="signUpUser()">
+            <p>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="fName" placeholder="First Name" required>
+                    <mat-error *ngIf="form.hasError('required', 'fName')">
+                        Please enter your new password
+                    </mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="lName" placeholder="Last Name" required>
+                    <mat-error *ngIf="form.hasError('required', 'lName')">
+                        Please enter your new password
+                    </mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="email" placeholder="Email Address" required>
+                    <mat-error *ngIf="form.hasError('required', 'email')">
+                        Please enter your new password
+                    </mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input matInput type="password" formControlName="password" placeholder="Password" required>
+                    <mat-error *ngIf="form.hasError('required', 'password')">
+                        Please enter your new password
+                    </mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field>
+                    <input matInput type="password" formControlName="confirmPass" placeholder="Confirm Password" required>
+                    <mat-error *ngIf="form.hasError('required', 'confirmPass')">
+                        Please enter your new password
+                    </mat-error>
+                </mat-form-field>
+            </p>
+
+            <button mat-raised-button color="primary" class="btn btn-primary" type="submit">Sign Up</button>
+        </form>
+    </mat-card-content>
+</mat-card>

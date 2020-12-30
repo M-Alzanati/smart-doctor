@@ -68,4 +68,25 @@ export class AuthenticationService {
       this.jsonHeader
     );
   }
+
+  forgetPassword(email: string) {
+    return this.http.post(
+      API_URL + '/forget_password',
+      {
+        'email': email,
+      },
+      this.jsonHeader
+    );
+  }
+
+  resetPassword(resetToken: string, password: string) {
+    return this.http.post(
+      API_URL + '/reset_password',
+      {
+        'password': password,
+        'reset_token': resetToken
+      },
+      this.jsonHeader
+    );
+  }
 }

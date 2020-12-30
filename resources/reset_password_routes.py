@@ -60,14 +60,11 @@ def reset_password():
 
         user_id = decode_token(reset_token)['identity']
         user = db.get_user_by_email(user_id)
-
-        user.modify(password=password)
-        user.hash_password()
-        user.save()
+        db.change_user_password(user['email'], password)
 
         return send_email('[smart-doctor-support] Password reset successful',
                           sender='support@smart-doctor-support.com',
-                          recipients=[user.email],
+                          recipients=[user['email']],
                           text_body='Password reset was successful',
                           html_body='<p>Password reset was successful</p>')
 

@@ -2,10 +2,11 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import (
     JWTManager, jwt_required, get_jwt_identity,
     create_access_token, create_refresh_token,
-    jwt_refresh_token_required, get_raw_jwt, current_user
+    jwt_refresh_token_required, get_raw_jwt
 )
 from pymongo import MongoClient
 from secrets import SecretsUtility
+from flask_cors import CORS
 
 # Making a Connection with MongoClient
 client = MongoClient("mongodb://localhost:27017/")
@@ -15,6 +16,7 @@ db = client["doctor-ocr"]
 users = db["User"]
 
 app = Flask(__name__)
+CORS(app)
 
 # JWT Config
 app.config["JWT_SECRET_KEY"] = SecretsUtility.MY_SECRET
@@ -34,8 +36,9 @@ def check_if_token_in_blacklist(decrypted_token):
 @app.route("/register", methods=["POST"])
 def register():
     email = request.json.get("email", None)
-    test = users.find_one({"email": email})
-    if test:
+    user = users.find_one({"email": email})
+
+    if user:
         return jsonify(message="User Already Exist"), 409
     else:
         first_name = request.json.get("first_name", None)
@@ -44,7 +47,7 @@ def register():
         secret_password = SecretsUtility.generate_hash(password)
         user_info = dict(first_name=first_name, last_name=last_name, email=email, password=secret_password)
         users.insert_one(user_info)
-        return jsonify(message="User added Successfully"), 201
+        return jsonify(status="success"), 201
 
 
 @app.route('/refresh', methods=['POST'])
@@ -76,7 +79,12 @@ def login():
         if SecretsUtility.verify_hash(password, user["password"]):
             access_token = create_access_token(identity=email)
             refresh_token = create_refresh_token(identity=email)
-            return jsonify(message="Login Succeeded!", access_token=access_token, refresh_token=refresh_token), 201
+            return jsonify(
+                message="Login Succeeded!",
+                access_token=access_token,
+                refresh_token=refresh_token,
+                user_id=email
+            ), 201
         else:
             return jsonify(message="Bad Password"), 401
     else:
@@ -94,7 +102,7 @@ def logout():
 @app.route('/authenticate', methods=['POST'])
 @jwt_required
 def authenticate():
-    return jsonify(current_user), 200
+    return jsonify(get_jwt_identity()), 200
 
 
 @app.route("/dashboard")

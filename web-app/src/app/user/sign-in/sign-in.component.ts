@@ -14,7 +14,7 @@ export class SignInComponent implements OnInit {
 
   constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) { 
     this.form = this.formBuilder.group({
-      email: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
+      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
     })
   }

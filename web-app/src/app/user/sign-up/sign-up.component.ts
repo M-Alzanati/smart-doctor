@@ -14,7 +14,9 @@ export class SignUpComponent implements OnInit {
 
   constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) { 
     this.form = this.formBuilder.group({
-      email: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
+      fName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
+      lName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
+      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
     })
   }
@@ -24,6 +26,8 @@ export class SignUpComponent implements OnInit {
 
   signUpUser(){
     this.authService.signUp(
+      this.form.get('fName')?.value,
+      this.form.get('lName')?.value,
       this.form.get('email')?.value,
       this.form.get('password')?.value
     ).subscribe(

@@ -9,6 +9,8 @@ flask-jwt-extended = "*"
 pymongo = "*"
 passlib = "*"
 flask-cors = "*"
+flask-mail = "*"
+flask-restful = "*"
 
 [dev-packages]
 

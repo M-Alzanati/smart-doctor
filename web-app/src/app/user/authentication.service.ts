@@ -19,10 +19,12 @@ export class AuthenticationService {
     return localStorage.getItem('user_id');
   }
 
-  signUp(email: string, password: string) {
+  signUp(fName:string, lName:string, email: string, password: string) {
     return this.http.post(
       API_URL + '/register',
       {
+        'first_name': fName,
+        'last_name': lName,
         'email': email,
         'password': password
       },
@@ -48,7 +50,7 @@ export class AuthenticationService {
     )
   }
 
-  signOut(email: string, password: string) {
+  signOut() {
     return this.http.delete(
       API_URL + '/logout',
       this.jsonHeader

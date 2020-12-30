@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import (
     JWTManager, jwt_required, get_jwt_identity,
     create_access_token, create_refresh_token,
-    jwt_refresh_token_required, get_raw_jwt
+    jwt_refresh_token_required, get_raw_jwt, current_user
 )
 from pymongo import MongoClient
 from secrets import SecretsUtility
@@ -29,12 +29,6 @@ blacklist = set()
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
     return jti in blacklist
-
-
-@app.route("/dashboard")
-@jwt_required
-def dashboard():
-    return jsonify(message="Welcome! to the Data Science Learner")
 
 
 @app.route("/register", methods=["POST"])
@@ -97,10 +91,16 @@ def logout():
     return jsonify({"msg": "Successfully logged out"}), 200
 
 
-@app.route('/protected', methods=['GET'])
+@app.route('/authenticate', methods=['POST'])
 @jwt_required
-def protected():
-    return jsonify({'hello': 'world'})
+def authenticate():
+    return jsonify(current_user), 200
+
+
+@app.route("/dashboard")
+@jwt_required
+def dashboard():
+    return jsonify(message="Welcome! to the Data Science Learner")
 
 
 if __name__ == '__main__':

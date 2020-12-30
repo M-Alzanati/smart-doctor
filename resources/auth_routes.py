@@ -8,6 +8,7 @@ from secrets import SecretsUtility
 from flask import Blueprint
 from database import db
 
+
 blacklist = set()
 auths = Blueprint('auths', __name__)
 
@@ -81,3 +82,5 @@ def logout():
 @jwt_required
 def authenticate():
     return jsonify(get_jwt_identity()), 200
+
+

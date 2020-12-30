@@ -1,13 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_jwt_extended import (
-    JWTManager, jwt_required, get_jwt_identity,
-    create_access_token, create_refresh_token,
-    jwt_refresh_token_required, get_raw_jwt
+    JWTManager
 )
 from secrets import SecretsUtility
 from flask_cors import CORS
 from flask_mail import Mail
-from resources import auth_routs
+from resources import auth_routes, reset_password_routes
 
 app = Flask(__name__)
 CORS(app)
@@ -24,9 +22,10 @@ mail = Mail(app)
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
-    return jti in auth_routs.blacklist
+    return jti in auth_routes.blacklist
 
 
 if __name__ == '__main__':
-    app.register_blueprint(auth_routs.auths)  # register authentication modules
+    app.register_blueprint(auth_routes.auths)  # register authentication modules
+    app.register_blueprint(reset_password_routes.reset_passwords)
     app.run(host="localhost", debug=True)

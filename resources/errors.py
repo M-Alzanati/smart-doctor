@@ -30,7 +30,7 @@ class UnauthorizedError(Exception):
     pass
 
 
-class EmailDoesnotExistsError(Exception):
+class EmailDoesntExistsError(Exception):
     pass
 
 
@@ -75,7 +75,7 @@ errors = {
         "message": "Invalid username or password",
         "status": 401
     },
-    "EmailDoesnotExistsError": {
+    "EmailDoesntExistsError": {
         "message": "Couldn't find the user with given email address",
         "status": 400
     },

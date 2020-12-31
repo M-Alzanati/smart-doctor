@@ -25,7 +25,7 @@ def forgot_password():
         if not email:
             raise SchemaValidationError
 
-        user = db.get_user_by_email(email)
+        user = db.get_user(email)
         if not user:
             raise EmailDoesntExistsError
 
@@ -59,7 +59,7 @@ def reset_password():
             raise SchemaValidationError
 
         user_id = decode_token(reset_token)['identity']
-        user = db.get_user_by_email(user_id)
+        user = db.get_user(user_id)
         db.change_user_password(user['email'], password)
 
         return send_email('[smart-doctor-support] Password reset successful',

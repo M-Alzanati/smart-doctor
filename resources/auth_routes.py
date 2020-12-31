@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_jwt_extended import (
-    jwt_required, get_jwt_identity,
+    jwt_required, get_jwt_identity, get_jwt_claims,
     create_access_token, create_refresh_token,
     jwt_refresh_token_required, get_raw_jwt
 )
@@ -9,6 +9,7 @@ from flask import Blueprint
 from database import db
 
 
+roles = ['Patient', 'Doctor']
 blacklist = set()
 auths = Blueprint('auths', __name__)
 
@@ -16,7 +17,7 @@ auths = Blueprint('auths', __name__)
 @auths.route("/register", methods=["POST"])
 def register():
     email = request.json.get("email", None)
-    user = db.get_user_by_email(email)
+    user = db.get_user(email)
 
     if user:
         return jsonify(message="User Already Exist"), 409
@@ -25,8 +26,12 @@ def register():
         last_name = request.json.get("last_name", None)
         password = request.json.get("password", None)
         secret_password = SecretsUtility.generate_hash(password)
-        db.insert_new_user(first_name, last_name, email, secret_password)
-        return jsonify(status="success"), 201
+        role = request.json.get("role", None)
+        if roles.index(role):
+            db.insert_new_user(first_name, last_name, email, secret_password, role)
+            return jsonify(status="success"), 201
+        else:
+            return jsonify(status="failed"), 404
 
 
 @auths.route('/refresh', methods=['POST'])
@@ -53,7 +58,7 @@ def login():
     if not password:
         return jsonify({"msg": "Missing password parameter"}), 400
 
-    user = db.get_user_by_email(email)
+    user = db.get_user(email)
     if user:
         if SecretsUtility.verify_hash(password, user["password"]):
             access_token = create_access_token(identity=email)
@@ -62,7 +67,8 @@ def login():
                 message="Login Succeeded!",
                 access_token=access_token,
                 refresh_token=refresh_token,
-                user_id=email
+                user_id=email,
+                user_role="Patient"  # change this to get it from claims
             ), 201
         else:
             return jsonify(message="Bad Password"), 401

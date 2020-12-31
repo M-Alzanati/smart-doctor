@@ -11,6 +11,8 @@ passlib = "*"
 flask-cors = "*"
 flask-mail = "*"
 flask-restful = "*"
+pillow = "*"
+pytesseract = "*"
 
 [dev-packages]
 

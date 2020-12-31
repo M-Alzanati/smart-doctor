@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 import { MustMatch } from '../../_helper/must-match.validator';
+import { UserRolesToArray } from './user-roles';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,6 +13,7 @@ import { MustMatch } from '../../_helper/must-match.validator';
 export class SignUpComponent implements OnInit {
 
   form: FormGroup;
+  roles: string[] = UserRolesToArray();
 
   constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
@@ -19,7 +21,8 @@ export class SignUpComponent implements OnInit {
       lName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
-      confirmPass: new FormControl('', Validators.compose([Validators.required]))
+      confirmPass: new FormControl('', Validators.compose([Validators.required])),
+      role: new FormControl('', Validators.compose([Validators.required]))
     }, {
       validator: MustMatch('password', 'confirmPass')
     });
@@ -33,7 +36,8 @@ export class SignUpComponent implements OnInit {
       this.form.get('fName')?.value,
       this.form.get('lName')?.value,
       this.form.get('email')?.value,
-      this.form.get('password')?.value
+      this.form.get('password')?.value,
+      this.form.get('role')?.value
     ).subscribe(
       (result: any) => {
         if (result['status'] == 'success') {
@@ -60,5 +64,9 @@ export class SignUpComponent implements OnInit {
       return { 'password not valid': true };
     }
     return null;
+  }
+
+  alreadySignin(){
+    
   }
 }

@@ -8,6 +8,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -23,6 +24,7 @@ import { AuthenticationService } from './user/authentication.service';
 import { AuthGuard } from './user/auth.guard';
 import { DoctorComponent } from './doctor/doctor.component';
 import { PatientComponent } from './patient/patient.component';
+import { PatientService } from './patient/patient.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { PatientComponent } from './patient/patient.component';
     BrowserModule,
     AppRoutingModule,
     MatCardModule,
+    MatSelectModule,
     MatButtonModule,
     MatToolbarModule,
     MatTabsModule,
@@ -55,7 +58,8 @@ import { PatientComponent } from './patient/patient.component';
       multi: true
     },
     AuthenticationService,
-    AuthGuard
+    AuthGuard,
+    PatientService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,31 +5,41 @@
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="signUpUser()">
             <p>
-                <mat-form-field>
+                <mat-form-field class="my_form_field">
                     <input matInput type="text" formControlName="fName" placeholder="First Name" required>
                     <mat-error *ngIf="form.hasError('required', 'fName')">
-                        Please enter your new password
+                        Please enter your new first name
                     </mat-error>
                 </mat-form-field>
             </p>
             <p>
-                <mat-form-field>
+                <mat-form-field class="my_form_field">
                     <input matInput type="text" formControlName="lName" placeholder="Last Name" required>
                     <mat-error *ngIf="form.hasError('required', 'lName')">
-                        Please enter your new password
+                        Please enter your last name
                     </mat-error>
                 </mat-form-field>
             </p>
             <p>
-                <mat-form-field>
+                <mat-form-field class="my_form_field">
                     <input matInput type="text" formControlName="email" placeholder="Email Address" required>
                     <mat-error *ngIf="form.hasError('required', 'email')">
-                        Please enter your new password
+                        Please enter your email
                     </mat-error>
                 </mat-form-field>
             </p>
             <p>
                 <mat-form-field>
+                    <mat-label>User Role</mat-label>
+                    <mat-select formControlName="role">
+                        <mat-option *ngFor="let my_role of roles" [value]="my_role">
+                            {{my_role}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field class="my_form_field">
                     <input matInput type="password" formControlName="password" placeholder="Password" required>
                     <mat-error *ngIf="form.hasError('required', 'password')">
                         Please enter your new password
@@ -37,15 +47,21 @@
                 </mat-form-field>
             </p>
             <p>
-                <mat-form-field>
+                <mat-form-field class="my_form_field">
                     <input matInput type="password" formControlName="confirmPass" placeholder="Confirm Password" required>
                     <mat-error *ngIf="form.hasError('required', 'confirmPass')">
-                        Please enter your new password
+                        Please confirm your new password
                     </mat-error>
                 </mat-form-field>
             </p>
-
-            <button mat-raised-button color="primary" class="btn btn-primary" type="submit">Sign Up</button>
+            <div class="row">
+                <div class="col-6">
+                    <button mat-raised-button color="primary" class="btn btn-primary" type="submit">Sign Up</button>
+                </div>
+                <div class="col-6">
+                    <button style="background: darkolivegreen;" mat-raised-button color="primary" class="btn btn-primary" (click)="alreadySignin()">Already Sign in</button>
+                </div>
+            </div>
         </form>
     </mat-card-content>
 </mat-card>

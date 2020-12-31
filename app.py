@@ -5,7 +5,7 @@ from flask_jwt_extended import (
 from secrets import SecretsUtility
 from flask_cors import CORS
 from flask_mail import Mail
-from resources import auth_routes, reset_password_routes
+from resources import auth_routes, reset_password_routes, routes
 
 app = Flask(__name__)
 CORS(app)
@@ -19,6 +19,17 @@ jwt = JWTManager(app)
 mail = Mail(app)
 
 
+# @jwt.user_claims_loader
+# def add_claims_to_access_token(user):
+#     user_roles = db.get_user_role(user);
+#     return {'roles': user_roles}
+#
+#
+# @jwt.user_identity_loader
+# def user_identity_lookup(user):
+#     return user['email']
+
+
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
@@ -28,4 +39,6 @@ def check_if_token_in_blacklist(decrypted_token):
 if __name__ == '__main__':
     app.register_blueprint(auth_routes.auths)  # register authentication modules
     app.register_blueprint(reset_password_routes.reset_passwords)
+    app.register_blueprint(routes.patients)
+    app.register_blueprint(routes.doctors)
     app.run(host="localhost", debug=True)

@@ -7,9 +7,8 @@ from flask_jwt_extended import (
 from secrets import SecretsUtility
 from flask import Blueprint
 from database import db
+from .roles import *
 
-
-roles = ['Patient', 'Doctor']
 blacklist = set()
 auths = Blueprint('auths', __name__)
 
@@ -27,7 +26,7 @@ def register():
         password = request.json.get("password", None)
         secret_password = SecretsUtility.generate_hash(password)
         role = request.json.get("role", None)
-        if roles.index(role):
+        if UserRoles().get_roles().index(role):
             db.insert_new_user(first_name, last_name, email, secret_password, role)
             return jsonify(status="success"), 201
         else:
@@ -68,7 +67,7 @@ def login():
                 access_token=access_token,
                 refresh_token=refresh_token,
                 user_id=email,
-                user_role="Patient"  # change this to get it from claims
+                user_role=user['role']  # change this to get it from claims
             ), 201
         else:
             return jsonify(message="Bad Password"), 401

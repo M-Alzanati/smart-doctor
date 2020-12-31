@@ -6,6 +6,7 @@ from secrets import SecretsUtility
 from flask_cors import CORS
 from flask_mail import Mail
 from resources import auth_routes, reset_password_routes, routes
+from database import db
 
 app = Flask(__name__)
 CORS(app)
@@ -19,15 +20,15 @@ jwt = JWTManager(app)
 mail = Mail(app)
 
 
-# @jwt.user_claims_loader
-# def add_claims_to_access_token(user):
-#     user_roles = db.get_user_role(user);
-#     return {'roles': user_roles}
-#
-#
-# @jwt.user_identity_loader
-# def user_identity_lookup(user):
-#     return user['email']
+@jwt.user_claims_loader
+def add_claims_to_access_token(email):
+    user_roles = db.get_user_role(email)
+    return {'roles': user_roles}
+
+
+@jwt.user_identity_loader
+def user_identity_lookup(email):
+    return email
 
 
 @jwt.token_in_blacklist_loader

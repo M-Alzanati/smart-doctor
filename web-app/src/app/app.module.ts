@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
-
-
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +19,7 @@ import { SignInComponent } from './user/sign-in/sign-in.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { UserRequestInterceptor } from './user/user.request.interceptor';
 import { AuthenticationService } from './user/authentication.service';
-import { AuthGuard } from './user/auth.guard';
+import { AuthGuard } from './user/guards/auth.guard';
 import { DoctorComponent } from './doctor/doctor.component';
 import { PatientComponent } from './patient/patient.component';
 import { PatientService } from './patient/patient.service';

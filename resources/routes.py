@@ -20,7 +20,7 @@ def upload_blood_pressure():
             image_path = 'images/' + image_file.filename
             image_file.save(image_path)
             user_identity = get_jwt_identity()
-            img_id = db.insert_image(user_identity, image_path)
+            img_id = db.insert_image_text(user_identity, image_path)
             return jsonify(message="Image Saved Succeeded!", image_id=img_id), 201
     except Exception as e:
         raise InternalServerError

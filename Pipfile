@@ -13,6 +13,7 @@ flask-mail = "*"
 flask-restful = "*"
 pillow = "*"
 pytesseract = "*"
+opencv-python = "*"
 
 [dev-packages]
 

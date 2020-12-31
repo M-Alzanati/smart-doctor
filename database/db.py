@@ -1,13 +1,14 @@
 from pymongo import MongoClient
 from secrets import SecretsUtility
 from PIL import Image
-from bson.binary import Binary
+import pytesseract
 import io
+from images import image_utility
 
 client = MongoClient("mongodb://localhost:27017/")
 db = client["doctor-ocr"]
 users = db["User"]
-images = db["Images"]
+Bp_images = db["BpImagesText"]
 
 
 def get_user(email):
@@ -30,28 +31,28 @@ def change_user_password(email, password):
     users.update({'_id': current_user['_id']}, {'$set': {'password': secret_password}}, upsert=False)
 
 
-def insert_image(email, image_file):
+def insert_image_text(email, image_file):
     img_format = image_file[image_file.index('.') + 1:].upper()
     im = Image.open(image_file)
 
     image_bytes = io.BytesIO()
     im.save(image_bytes, img_format)
+    image_text = pytesseract.image_to_string(im, lang='eng')
 
     user_id = get_user(email)['_id']
-    image = {
+    image_as_text = {
         'user_id': user_id,
-        'data': image_bytes.getvalue()
+        'data': image_text
     }
 
-    image_id = images.insert_one(image).inserted_id
+    image_id = Bp_images.insert_one(image_as_text).inserted_id
     return image_id
 
 
 def get_images(email):
     result = []
     user_id = get_user(email)['_id']
-    user_images = images.find({'user_id': user_id})
+    user_images = Bp_images.find({'user_id': user_id})
     for img in user_images:
-        pil_img = Image.open(io.BytesIO(img['data']))
-        result.append(pil_img)
+        result.append(img)
     return result

@@ -32,4 +32,8 @@ export class SignInComponent implements OnInit {
   onSignup() {
     this.router.navigate(['sign-up']);
   }
+
+  onForgetPassword(){
+    
+  }
 }

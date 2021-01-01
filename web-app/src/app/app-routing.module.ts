@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -8,7 +8,6 @@ import { PatientComponent } from './patient/patient.component';
 import { AnonymousLayoutComponent } from './anonymous-layout/anonymous-layout.component';
 import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticated-layout.component';
 import { AuthGuard } from './user/guards/auth.guard';
-import { LoggedInAuthGuard } from './user/guards/logged-in-auth.guard';
 
 const routes: Routes = [
   {
@@ -33,4 +32,10 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  constructor(private router: Router) {
+    this.router.errorHandler = (error: any) => {
+      this.router.navigate(['']);
+    }
+  }
+}

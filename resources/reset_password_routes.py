@@ -18,7 +18,7 @@ reset_passwords = Blueprint('reset_password', __name__)
 
 @reset_passwords.route("/forget_password", methods=["POST"])
 def forgot_password():
-    url = request.host_url + 'reset/'
+    url = 'localhost:4200/' + 'reset/'
     try:
         body = request.get_json()
         email = body.get('email')
@@ -47,9 +47,8 @@ def forgot_password():
         raise InternalServerError
 
 
-@reset_passwords.route("/reset_password", methods=["POST"])
+@reset_passwords.route("/reset", methods=["POST"])
 def reset_password():
-    url = request.host_url + 'reset/'
     try:
         body = request.get_json()
         reset_token = body.get('reset_token')

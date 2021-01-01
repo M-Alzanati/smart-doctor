@@ -1,1 +1,31 @@
-<p>doctor works!</p>
+<mat-card style="margin: auto;width: 65%;margin-top: 2%;">
+    <mat-card-header>
+        <mat-card-title>
+            Blood Pressuer Analysis data
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Patient Name</mat-label>
+            <mat-select [(ngModel)]="selectedPatient" (selectionChange)="doctorChange($event)">
+                <mat-option *ngFor="let patient of patients" [value]="patient.value">
+                    {{patient.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Created Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef> Blood Pressuer </th>
+                <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+</mat-card>

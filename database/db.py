@@ -3,16 +3,22 @@ from secrets import SecretsUtility
 from PIL import Image
 import pytesseract
 import io
-from images import image_utility
+import datetime
+from resources import roles
 
 client = MongoClient("mongodb://localhost:27017/")
 db = client["doctor-ocr"]
 users = db["User"]
 Bp_images = db["BpImagesText"]
+user_roles = roles.UserRoles()
 
 
 def get_user(email):
     return users.find_one({"email": email})
+
+
+def get_patients():
+    return users.find({'role': user_roles.patient()})
 
 
 def get_user_role(email):
@@ -42,14 +48,15 @@ def insert_image_text(email, image_file):
     user_id = get_user(email)['_id']
     image_as_text = {
         'user_id': user_id,
-        'data': image_text
+        'data': image_text.strip(),
+        'created_date': datetime.datetime.now()
     }
 
     image_id = Bp_images.insert_one(image_as_text).inserted_id
     return image_id
 
 
-def get_images(email):
+def get_bp_images_as_text(email):
     result = []
     user_id = get_user(email)['_id']
     user_images = Bp_images.find({'user_id': user_id})

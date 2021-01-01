@@ -1,5 +1,6 @@
-<mat-card style="background: ivory;width: 25%;">
+<mat-card style="background: ivory;width: 35%;">
     <mat-card-title>Sign In</mat-card-title>
+    <img src="../../../assets/img/login_page.jpg" width="100%" height="300">
     <mat-card-content>
         <div class="row">
             <form [formGroup]="form" (ngSubmit)="signInUser()">
@@ -22,11 +23,14 @@
                 <div class="row">
                     <div class="col-md-6">
                         <button mat-raised-button color="primary" type="submit">Sign In</button>
-
                     </div>
                     <div class="col-md-6">
                         <button style="background: darkolivegreen;" mat-raised-button color="primary" (click)="onSignup()">Sign Up</button>
                     </div>
+                </div>
+                <br>
+                <div class="row">
+                    <a (click)="onForgetPassword()" href="_">Forget Passowrd?</a>
                 </div>
             </form>
         </div>

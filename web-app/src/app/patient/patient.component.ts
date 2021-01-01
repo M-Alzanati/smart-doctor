@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from './patient.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-patient',
@@ -14,7 +15,7 @@ export class PatientComponent implements OnInit {
   uploadedFilePath: string = '';
   fileName: string;
 
-  constructor(private patientService: PatientService) {
+  constructor(private patientService: PatientService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -47,7 +48,7 @@ export class PatientComponent implements OnInit {
     this.patientService.uploadImage(formData)
       .subscribe(
         (data) => {
-          debugger;
+          
         },
         (error) => {
           debugger;

@@ -4,7 +4,7 @@ from flask_jwt_extended import (
 )
 from flask import Blueprint
 from database import db
-from werkzeug.exceptions import InternalServerError
+from werkzeug.exceptions import InternalServerError, BadRequest
 from .roles import *
 
 
@@ -31,13 +31,35 @@ def upload_blood_pressure():
         raise InternalServerError('Invalid User Role')
 
 
-@patients.route("/get_bp_image", methods=["GET"])
+@patients.route("/get_patients", methods=["GET"])
 @jwt_required
-def get_user_images():
+def get_patients():
     try:
-        email = request.json.get('email')
-        db.get_images(email)
-        return jsonify(message="Success"), 201
+        result = []
+        for p in db.get_patients():
+            result.append({
+                'first_name': p['first_name'],
+                'last_name': p['last_name'],
+                'email': p['email']
+            })
+        return jsonify(result), 201
     except Exception as e:
         raise InternalServerError
 
+
+@patients.route("/get_patients_bp_data", methods=["POST"])
+@jwt_required
+def get_patients_bp_data():
+    try:
+        result = []
+        email = request.json.get('email')
+        #   role = get_jwt_claims()
+
+        for img in db.get_bp_images_as_text(email):
+            result.append({
+                'value': img['data'],
+                'date': img['created_date']
+            })
+        return jsonify(result), 201
+    except Exception as e:
+        raise InternalServerError

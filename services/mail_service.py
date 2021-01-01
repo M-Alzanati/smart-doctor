@@ -9,7 +9,7 @@ def send_async_email(app, msg):
     with app.app_context():
         try:
             mail.send(msg)
-        except ConnectionRefusedError:
+        except ConnectionRefusedError as e:
             raise InternalServerError("[MAIL SERVER] not working")
 
 

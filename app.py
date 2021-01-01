@@ -15,9 +15,15 @@ CORS(app)
 app.config["JWT_SECRET_KEY"] = SecretsUtility.MY_SECRET
 app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'my_gmail'
+app.config['MAIL_PASSWORD'] = 'my_gmail_password'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
-jwt = JWTManager(app)
 mail = Mail(app)
+jwt = JWTManager(app)
 
 
 @jwt.user_claims_loader

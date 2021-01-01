@@ -23,17 +23,20 @@ export class SignInComponent implements OnInit {
   }
 
   signInUser(){
-    this.authService.signIn(
-      this.form.get('email')?.value,
-      this.form.get('password')?.value
-    );
+    if (this.form.valid) {
+      this.authService.signIn(
+        this.form.get('email')?.value,
+        this.form.get('password')?.value
+      );
+    }
   }
 
   onSignup() {
     this.router.navigate(['sign-up']);
   }
 
-  onForgetPassword(){
-    
+  onForgetPassword(event: Event){
+    event.preventDefault();
+    this.router.navigate(['forget-password']);
   }
 }

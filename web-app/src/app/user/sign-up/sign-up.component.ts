@@ -32,22 +32,24 @@ export class SignUpComponent implements OnInit {
   }
 
   signUpUser() {
-    this.authService.signUp(
-      this.form.get('fName')?.value,
-      this.form.get('lName')?.value,
-      this.form.get('email')?.value,
-      this.form.get('password')?.value,
-      this.form.get('role')?.value
-    ).subscribe(
-      (result: any) => {
-        if (result['status'] == 'success') {
-          this.form.reset();
-          this.router.navigate(['sign-in']);
+    if (this.form.valid) {
+      this.authService.signUp(
+        this.form.get('fName')?.value,
+        this.form.get('lName')?.value,
+        this.form.get('email')?.value,
+        this.form.get('password')?.value,
+        this.form.get('role')?.value
+      ).subscribe(
+        (result: any) => {
+          if (result['status'] == 'success') {
+            this.form.reset();
+            this.router.navigate(['sign-in']);
+          }
+        },
+        (error) => {
         }
-      },
-      (error) => {
-      }
-    )
+      );
+    }
   }
 
   ValidatePassword(control: AbstractControl): { [key: string]: any } | null {
@@ -57,7 +59,7 @@ export class SignUpComponent implements OnInit {
     return null;
   }
 
-  alreadySignin(){
+  alreadySignin() {
     this.router.navigate(['sign-in']);
   }
 }

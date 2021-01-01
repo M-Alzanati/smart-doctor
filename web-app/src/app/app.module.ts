@@ -32,6 +32,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { AnonymousLayoutComponent } from './anonymous-layout/anonymous-layout.component';
 import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticated-layout.component';
+import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticat
     NavComponent,
     AnonymousLayoutComponent,
     AuthenticatedLayoutComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

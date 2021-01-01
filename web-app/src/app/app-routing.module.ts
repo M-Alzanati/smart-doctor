@@ -8,6 +8,8 @@ import { PatientComponent } from './patient/patient.component';
 import { AnonymousLayoutComponent } from './anonymous-layout/anonymous-layout.component';
 import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticated-layout.component';
 import { AuthGuard } from './user/guards/auth.guard';
+import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -23,7 +25,9 @@ const routes: Routes = [
   {
     path: '', component: AnonymousLayoutComponent, children: [
       { path: 'sign-in', component: SignInComponent },
-      { path: 'sign-up', component: SignUpComponent }
+      { path: 'sign-up', component: SignUpComponent },
+      { path: 'forget-password', component: ForgetPasswordComponent },
+      { path: 'reset-password/:id', component: ResetPasswordComponent, pathMatch: 'prefix' }
     ]
   }
 ];

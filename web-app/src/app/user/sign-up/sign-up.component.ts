@@ -46,20 +46,11 @@ export class SignUpComponent implements OnInit {
         }
       },
       (error) => {
-        debugger;
       }
     )
   }
 
-  checkPasswords(group: FormGroup) {
-    let pass = group.get('password')?.value;
-    let confirmPass = group.get('confirmPass')?.value;
-
-    return pass === confirmPass ? null : { notSame: true }
-  }
-
   ValidatePassword(control: AbstractControl): { [key: string]: any } | null {
-    debugger;
     if (control.value && control.value) {
       return { 'password not valid': true };
     }
@@ -67,6 +58,6 @@ export class SignUpComponent implements OnInit {
   }
 
   alreadySignin(){
-    
+    this.router.navigate(['sign-in']);
   }
 }

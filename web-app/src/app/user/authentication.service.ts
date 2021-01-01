@@ -50,11 +50,11 @@ export class AuthenticationService {
         localStorage.setItem('user_role', result['user_role']);
 
         if (UserRoles.PATIENT == result['user_role'])
-          this.router.navigate(['patient']);
+          this.router.navigate(['app/patient']);
         else if (UserRoles.DOCTOR == result['user_role'])
-          this.router.navigate(['doctor']);
+          this.router.navigate(['app/doctor']);
         else
-          this.router.navigate(['profile']);
+          this.router.navigate(['app/profile']);
       });
   }
 
@@ -64,6 +64,7 @@ export class AuthenticationService {
       this.jsonHeader
     ).subscribe(
       (result: any) => {
+        localStorage.clear();
         this.router.navigate(['sign-in']);
       }
     );

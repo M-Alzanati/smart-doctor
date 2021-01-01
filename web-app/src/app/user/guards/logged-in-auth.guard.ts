@@ -12,12 +12,9 @@ export class LoggedInAuthGuard implements CanActivate {
 
   }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.authService.authenticate().pipe(
-      map(userId => {
-        return this.authService.getUserId() != userId;
-      })
-    );
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    let user_id = this.authService.getUserId();
+    return user_id == '' || user_id == undefined || user_id == null;
   }
   
 }

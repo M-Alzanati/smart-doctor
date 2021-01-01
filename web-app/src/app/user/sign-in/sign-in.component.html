@@ -19,7 +19,15 @@
                         </mat-error>
                     </mat-form-field>
                 </p>
-                <button mat-raised-button color="primary" type="submit">Sign In</button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button mat-raised-button color="primary" type="submit">Sign In</button>
+
+                    </div>
+                    <div class="col-md-6">
+                        <button style="background: darkolivegreen;" mat-raised-button color="primary" (click)="onSignup()">Sign Up</button>
+                    </div>
+                </div>
             </form>
         </div>
     </mat-card-content>

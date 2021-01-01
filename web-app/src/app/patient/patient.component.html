@@ -1,26 +1,25 @@
-<div class="container">
-    <div class="row">
-        <form [formGroup]="form" (ngSubmit)="uploadBpImage()" enctype="multipart/form-data">
-            <div class="col-md-6 offset-md-3">
-                <h3>Choose File</h3>
-                <div class="form-group">
-                    <input type="file" formControlName="image" (change)="fileProgress($event)" />
+<mat-card style="margin: auto;width: 50%;margin-top: 10%;">
+    <mat-card-header>
+        <mat-card-title>
+            Upload Blood Pressure Image
+        </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="previewUrl">
+    <mat-card-content>
+        <form (ngSubmit)="uploadBpImage()" enctype="multipart/form-data">
+            <div class="row">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" (change)="fileProgress($event)" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01">{{fileName}}</label>
+                    </div>
                 </div>
-                <div *ngIf="fileUploadProgress">
-                    Upload progress: {{ fileUploadProgress }}
-                </div>
-                <div class="image-preview mb-3" *ngIf="previewUrl">
-                    <img [src]="previewUrl" height="300" />
-                </div>
-
-                <div class="mb-3" *ngIf="uploadedFilePath">
-                    {{uploadedFilePath}}
-                </div>
-
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                <div class="input-group mb-3">
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
                 </div>
             </div>
         </form>
-    </div>
-</div>
+    </mat-card-content>
+</mat-card>

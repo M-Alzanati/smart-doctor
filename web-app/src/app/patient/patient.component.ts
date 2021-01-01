@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PatientService } from './patient.service';
 
 @Component({
@@ -13,12 +12,9 @@ export class PatientComponent implements OnInit {
   previewUrl: any;
   fileUploadProgress: string = '';
   uploadedFilePath: string = '';
-  form: FormGroup;
+  fileName: string;
 
-  constructor(private formBuilder: FormBuilder, private patientService: PatientService) {
-    this.form = this.formBuilder.group({
-      image: new FormControl('', Validators.compose([Validators.required]))
-    });
+  constructor(private patientService: PatientService) {
   }
 
   ngOnInit(): void {
@@ -26,6 +22,9 @@ export class PatientComponent implements OnInit {
 
   fileProgress(fileInput: any) {
     this.fileData = <File>fileInput.target.files[0];
+    if (this.fileData) {
+      this.fileName = this.fileData.name;
+    }
     this.preview();
   }
 

@@ -26,7 +26,7 @@ def register():
         password = request.json.get("password", None)
         secret_password = SecretsUtility.generate_hash(password)
         role = request.json.get("role", None)
-        if UserRoles().get_roles().index(role):
+        if role in UserRoles().get_roles():
             db.insert_new_user(first_name, last_name, email, secret_password, role)
             return jsonify(status="success"), 201
         else:

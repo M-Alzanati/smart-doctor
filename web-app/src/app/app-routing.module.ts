@@ -10,6 +10,7 @@ import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticat
 import { AuthGuard } from './user/guards/auth.guard';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { AuthenticationService } from './user/authentication.service';
 
 const routes: Routes = [
   {
@@ -37,8 +38,10 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthenticationService) {
     this.router.errorHandler = (error: any) => {
+      debugger;
+      this.authService.signOut();
       this.router.navigate(['']);
     }
   }

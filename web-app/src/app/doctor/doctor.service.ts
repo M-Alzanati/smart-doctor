@@ -22,11 +22,18 @@ export class DoctorService {
 
   getPatientPressureHistory(email: string) {
     return this.http.post(
-      API_URL + '/get_patients_bp_data',
+      API_URL + '/get_patient_bp_data',
       {
         'email': email
       },
       this.jsonHeader,
+    );
+  }
+
+  getAllPatientsData(){
+    return this.http.get(
+      API_URL + '/get_all_patients_bp_data',
+      this.jsonHeader
     );
   }
 }

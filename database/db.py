@@ -63,3 +63,11 @@ def get_bp_images_as_text(email):
     for img in user_images:
         result.append(img)
     return result
+
+
+def get_bp__all_images_as_text():
+    result = []
+    user_images = Bp_images.find()
+    for img in user_images:
+        result.append(img)
+    return result

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserRoles } from '../user/sign-up/user-roles';
 import { AuthenticationService } from '../user/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -12,9 +13,7 @@ import { AuthenticationService } from '../user/authentication.service';
 })
 export class NavComponent implements OnInit {
 
-  private doctorMenuItems: string[] = ['dashboard', 'doctor']
-  private patientMenuItems: string[] = ['dashboard', 'patient']
-  menuItems: string[] = [];
+  menuItems: NavItemModel[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -22,19 +21,36 @@ export class NavComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthenticationService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router,
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
     let role = localStorage.getItem('user_role');
-    if (role == UserRoles.PATIENT)
-      this.menuItems = this.patientMenuItems;
-    else if (role == UserRoles.DOCTOR)
-      this.menuItems = this.doctorMenuItems;
-    else
+    let user_id = localStorage.getItem('user_id');
+
+    if (role == UserRoles.PATIENT) {
+      this.menuItems.push({ 
+        value: 'patient', 
+        viewValue: user_id
+      });
+    }
+    else if (role == UserRoles.DOCTOR) {
+      this.menuItems.push({ 
+        value: 'doctor', 
+        viewValue: user_id 
+      });
+    }
+    else {
       this.menuItems = [];
+    }
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.signOut();
   }
+}
+
+export interface NavItemModel {
+  value: string;
+  viewValue: string | null;
 }

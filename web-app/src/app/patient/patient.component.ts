@@ -49,7 +49,7 @@ export class PatientComponent implements OnInit {
     this.patientService.uploadImage(formData)
       .subscribe(
         (data) => {
-          let err: DialogData = { title: 'Error', content: "Image Uploaded Successfully" };
+          let err: DialogData = { title: 'Success', content: "Image Uploaded Successfully" };
           this.dialog.open(MessageBoxComponent, { data: err});
         },
         (error) => {

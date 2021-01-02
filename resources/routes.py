@@ -6,7 +6,7 @@ from flask import Blueprint
 from database import db
 from werkzeug.exceptions import InternalServerError, BadRequest
 from .roles import *
-
+import re
 
 patients = Blueprint('patients', __name__)
 doctors = Blueprint('doctors', __name__)
@@ -47,19 +47,43 @@ def get_patients():
         raise InternalServerError
 
 
-@patients.route("/get_patients_bp_data", methods=["POST"])
+@patients.route("/get_patient_bp_data", methods=["POST"])
 @jwt_required
-def get_patients_bp_data():
+def get_patient_bp_data():
     try:
         result = []
         email = request.json.get('email')
-        #   role = get_jwt_claims()
 
         for img in db.get_bp_images_as_text(email):
             result.append({
                 'value': img['data'],
                 'date': img['created_date']
             })
+        return jsonify(result), 201
+    except Exception as e:
+        raise InternalServerError
+
+
+@patients.route("/get_all_patients_bp_data", methods=["GET"])
+@jwt_required
+def get_all_patients_data():
+    result = []
+    try:
+        for img in db.get_bp__all_images_as_text():
+            try:
+                data = img['data']
+                high = data[:data.index('-')].strip()
+                low = data[data.index('-') + 1:].strip()
+
+                high_text = re.findall(r'\d+', high)
+                low_text = re.findall(r'\d+', low)
+
+                result.append({
+                    'high': high_text[0],
+                    'low': low_text[0]
+                })
+            except Exception as e:
+                continue
         return jsonify(result), 201
     except Exception as e:
         raise InternalServerError

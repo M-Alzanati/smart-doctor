@@ -2,7 +2,7 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
         <mat-toolbar>Menu</mat-toolbar>
         <mat-nav-list>
-            <a *ngFor="let item of menuItems" mat-list-item [routerLink]="'/'+item">{{item | titlecase}}</a>
+            <a *ngFor="let item of menuItems" mat-list-item [routerLink]="'/'+'app/'+item.value">{{item.viewValue}}</a>
             <a mat-list-item (click)="onLogout()">Logout</a>
         </mat-nav-list>
     </mat-sidenav>

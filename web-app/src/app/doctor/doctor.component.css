@@ -1,3 +1,10 @@
 table {
     width: 100%;
 }
+
+.my_card {
+    margin: auto;
+    width: 65%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}

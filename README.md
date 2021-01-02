@@ -26,6 +26,7 @@ $ ng serve
 > Now you have a running angular application on port 4200, to open application 
 [localhost:4200](http://localhost:4200/)
 
+> open src/environment/environment.ts and change API_URL to flask running url, default is http://localhost:5000;
 ### Deploy Flask App
 
 We need to install python environement:

@@ -2,6 +2,7 @@
 This is main file that run flask restful server
 """
 
+import os
 from flask import Flask
 from flask_jwt_extended import (
     JWTManager
@@ -34,8 +35,8 @@ app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'my_gmail'
-app.config['MAIL_PASSWORD'] = 'my_gmail_password'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
@@ -63,7 +64,7 @@ def check_if_token_in_blacklist(decrypted_token):
 
 @passwords.route("/forget_password", methods=["POST"])
 def forgot_password():
-    url = 'localhost:4200/' + 'reset-password/'
+    url = os.getenv('FRONT_END_URL') + 'reset-password/'
     try:
         body = request.get_json()
         email = body.get('email')

@@ -3,10 +3,11 @@ from secrets import SecretsUtility
 from PIL import Image
 import pytesseract
 import io
+import os
 import datetime
 from resources import roles
 
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient(os.getenv('MONGO_URL'))
 db = client["doctor-ocr"]
 users = db["User"]
 Bp_images = db["BpImagesText"]

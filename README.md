@@ -6,6 +6,8 @@
 Please use the following guid to deploy application, this app using.
 
 # requirements:
+  - npm 6.14.8
+  - nodejs 12.20.0 
   - Ubuntu os 18.04 LTS
   - Python 3.6.9
   - Flask 1.0.2
@@ -16,6 +18,7 @@ Please use the following guid to deploy application, this app using.
 ### Deploy Angular App:
   - Open directory <web-app> in terminal
 ```sh
+$ npm install @angular/cli
 $ npm install
 $ ng serve
 ```

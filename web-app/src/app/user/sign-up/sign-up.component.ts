@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 import { MustMatch } from '../../_helper/must-match.validator';
 import { UserRolesToArray } from './user-roles';
+import { DialogData, MessageBoxComponent } from 'src/app/common/message-box/message-box.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +17,8 @@ export class SignUpComponent implements OnInit {
   form: FormGroup;
   roles: string[] = UserRolesToArray();
   
-  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, 
+    private router: Router, public dialog: MatDialog) {
     this.form = this.formBuilder.group({
       fName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
       lName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
@@ -48,6 +51,8 @@ export class SignUpComponent implements OnInit {
           }
         },
         (error) => {
+          let err: DialogData = { title: 'Error', content: error.message };
+          this.dialog.open(MessageBoxComponent, { data: err});
         }
       );
     }

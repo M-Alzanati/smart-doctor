@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogData, MessageBoxComponent } from '../common/message-box/message-box.component';
 import { DoctorService } from './doctor.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class DoctorComponent implements OnInit {
   displayedColumns: string[] = ['date', 'value'];
   dataSource: BloodPressureElement[] = [];
 
-  constructor(private doctorService: DoctorService) {
+  constructor(private doctorService: DoctorService, public dialog: MatDialog) {
 
   }
 
@@ -28,7 +30,8 @@ export class DoctorComponent implements OnInit {
         }
       },
       (error) => {
-        debugger;
+        let err: DialogData = { title: 'Error', content: error.message };
+          this.dialog.open(MessageBoxComponent, { data: err});
       }
     );
   }
@@ -45,7 +48,8 @@ export class DoctorComponent implements OnInit {
         this.dataSource = parsedData;
       },
       (error) => {
-
+        let err: DialogData = { title: 'Error', content: error.message };
+        this.dialog.open(MessageBoxComponent, { data: err});
       });
   }
 }

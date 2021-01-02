@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from './patient.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogData, MessageBoxComponent } from '../common/message-box/message-box.component';
 
 @Component({
   selector: 'app-patient',
@@ -48,10 +49,12 @@ export class PatientComponent implements OnInit {
     this.patientService.uploadImage(formData)
       .subscribe(
         (data) => {
-          
+          let err: DialogData = { title: 'Error', content: "Image Uploaded Successfully" };
+          this.dialog.open(MessageBoxComponent, { data: err});
         },
         (error) => {
-          debugger;
+          let err: DialogData = { title: 'Error', content: error.message };
+          this.dialog.open(MessageBoxComponent, { data: err});
         }
       )
   }

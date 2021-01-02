@@ -36,6 +36,7 @@ import { AnonymousLayoutComponent } from './anonymous-layout/anonymous-layout.co
 import { AuthenticatedLayoutComponent } from './authenticated-layout/authenticated-layout.component';
 import { ForgetPasswordComponent } from './user/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { MessageBoxComponent } from './common/message-box/message-box.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     AuthenticatedLayoutComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
+    MessageBoxComponent,
   ],
   imports: [
     BrowserModule,

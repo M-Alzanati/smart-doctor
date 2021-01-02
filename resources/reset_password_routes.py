@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from flask import render_template
 from flask import request
 from flask_jwt_extended import create_access_token, decode_token
@@ -32,13 +32,14 @@ def forgot_password():
         expires = datetime.timedelta(hours=24)
         reset_token = create_access_token(str(user['email']), expires_delta=expires)
 
-        return send_email('[smart-doctor-support] Reset Your Password',
-                          sender='support@smart-doctor.com',
-                          recipients=[user['email']],
-                          text_body=render_template('email/reset_password.txt',
-                                                    url=url + reset_token),
-                          html_body=render_template('email/reset_password.html',
-                                                    url=url + reset_token))
+        send_email('[smart-doctor-support] Reset Your Password',
+                   sender='support@smart-doctor.com',
+                   recipients=[user['email']],
+                   text_body=render_template('email/reset_password.txt',
+                                             url=url + reset_token),
+                   html_body=render_template('email/reset_password.html',
+                                             url=url + reset_token))
+        return jsonify(message="success"), 201
     except SchemaValidationError:
         raise SchemaValidationError
     except EmailDoesntExistsError:
@@ -61,11 +62,13 @@ def reset_password():
         user = db.get_user(user_id)
         db.change_user_password(user['email'], password)
 
-        return send_email('[smart-doctor-support] Password reset successful',
-                          sender='support@smart-doctor-support.com',
-                          recipients=[user['email']],
-                          text_body='Password reset was successful',
-                          html_body='<p>Password reset was successful</p>')
+        send_email('[smart-doctor-support] Password reset successful',
+                   sender='support@smart-doctor-support.com',
+                   recipients=[user['email']],
+                   text_body='Password reset was successful',
+                   html_body='<p>Password reset was successful</p>')
+
+        return jsonify(message="success"), 201
 
     except SchemaValidationError:
         raise SchemaValidationError

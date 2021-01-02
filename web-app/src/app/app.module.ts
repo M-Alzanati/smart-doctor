@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { RecaptchaModule, RecaptchaFormsModule } from "ng-recaptcha";
+
 import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -51,6 +53,8 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
   ],
   imports: [
     BrowserModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     AppRoutingModule,
     MatCardModule,
     MatSelectModule,
@@ -75,7 +79,7 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UserRequestInterceptor,
-      multi: true
+      multi: true,
     },
     AuthenticationService,
     AuthGuard,

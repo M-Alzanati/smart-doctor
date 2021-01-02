@@ -14,7 +14,7 @@ export class SignUpComponent implements OnInit {
 
   form: FormGroup;
   roles: string[] = UserRolesToArray();
-
+  
   constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
       fName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3)])),
@@ -22,7 +22,8 @@ export class SignUpComponent implements OnInit {
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
       confirmPass: new FormControl('', Validators.compose([Validators.required])),
-      role: new FormControl('', Validators.compose([Validators.required]))
+      role: new FormControl('', Validators.compose([Validators.required])),
+      capthaResponse: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)]))
     }, {
       validator: MustMatch('password', 'confirmPass')
     });

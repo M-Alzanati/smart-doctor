@@ -12,17 +12,19 @@ export class SignInComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private authService: AuthenticationService, private formBuilder: FormBuilder, private router: Router) { 
+  constructor(private authService: AuthenticationService,
+    private formBuilder: FormBuilder, private router: Router) {
     this.form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
+      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)])),
+      capthaResponse: new FormControl('', Validators.compose([Validators.required, Validators.minLength(10)]))
     })
   }
 
   ngOnInit(): void {
   }
 
-  signInUser(){
+  signInUser() {
     if (this.form.valid) {
       this.authService.signIn(
         this.form.get('email')?.value,
@@ -35,7 +37,7 @@ export class SignInComponent implements OnInit {
     this.router.navigate(['sign-up']);
   }
 
-  onForgetPassword(event: Event){
+  onForgetPassword(event: Event) {
     event.preventDefault();
     this.router.navigate(['forget-password']);
   }

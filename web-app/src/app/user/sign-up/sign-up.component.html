@@ -1,4 +1,4 @@
-<mat-card style="background: ivory;width: 35%;margin-top: 20px;">
+<mat-card style="background: ivory;width: 35%;margin-top: 20px; margin-bottom: 20px;">
     <mat-card-title>
         Sign Up
     </mat-card-title>
@@ -56,6 +56,10 @@
                     </mat-error>
                 </mat-form-field>
             </p>
+            <div class="row">
+                <re-captcha formControlName="capthaResponse" siteKey="6Lcp2h0aAAAAACawy-dp3dXxcUvLjsiZCW3XPSod"></re-captcha>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-md-6">
                     <button mat-raised-button color="primary" class="btn btn-primary" type="submit">Sign Up</button>

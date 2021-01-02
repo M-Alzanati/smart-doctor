@@ -1,13 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 from flask_jwt_extended import (
-    jwt_required, get_jwt_identity, get_jwt_claims,
+    jwt_required, get_jwt_identity,
     create_access_token, create_refresh_token,
     jwt_refresh_token_required, get_raw_jwt
 )
+
 from secrets import SecretsUtility
 from flask import Blueprint
 from database import db
 from .roles import *
+
 
 blacklist = set()
 auths = Blueprint('auths', __name__)
@@ -87,5 +89,3 @@ def logout():
 @jwt_required
 def authenticate():
     return jsonify(get_jwt_identity()), 200
-
-
